@@ -4,11 +4,7 @@ All data can be accessed on JAX FTP server
 
 ftp://ftp.jax.org/dgatti/ShortCourse2015/
 
-Particularly, gzipped FASTQ files of 192 samples (DO, liver, RNASeq)  can be accessed at
-
-ftp://ftp.jax.org/dgatti/ShortCourse2015/FASTQ/ (1.1TB)
-
-and the processed dataset can be downloaded from
+RNASeq DO liver dataset can be downloaded from
 
 ftp://ftp.jax.org/dgatti/ShortCourse2015/DO192_DataforSysGenCourse.Rdata (639 MB)
 
