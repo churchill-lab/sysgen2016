@@ -1,7 +1,7 @@
 # Short Course on Systems Genetics 2016
 
 
-This is a repository for [Short Course on Systems Genetics](https://www.jax.org/education-and-learning/education-calendar/2016/september/short-course-on-systems-genetics) (October 16 - 22, 2016) at [The Jackson Laboratory](http://www.jax.org) that includes the following tutorials:
+This is a repository for [Short Course on Systems Genetics](https://www.jax.org/education-and-learning/education-calendar/2016/october/short-course-on-systems-genetics) (October 16 - 21, 2016) at [The Jackson Laboratory](http://www.jax.org) that includes the following tutorials:
 
 * __kallisto, EMASE & g2gtools__ (KB Choi & N Raghupathy) [[markdown]](https://github.com/churchill-lab/sysgen2016/blob/master/markdown/RNASeq_pipeline.md): generate an index, pseudo-align reads and quantify the expression 
 * __DESeq2__ (N Raghupathy) [[markdown]](https://github.com/churchill-lab/sysgen2016/blob/master/markdown/Differential_Expression.Rmd): detect differential expression between groups of RNASeq samples
