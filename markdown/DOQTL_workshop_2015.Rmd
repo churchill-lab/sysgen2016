@@ -18,7 +18,6 @@ and measured gene expression using RNASeq and protein levels using mass spectrom
 Sex | chow | HFD
 ----|------|----
  F  |  50  |  48
- M  |  48  |  46
 
 In this tutorial, we will map gene expression traits. We will perform linkage mapping using the DO haplotype reconstructions and then perform association mapping using imputed SNPs from the DO founders. You will then map an expression trait that you choose.
 
@@ -64,7 +63,7 @@ The rows contain sample IDs (F326, F327, F329, etc.) and the columns contain Ens
 Next, let's look at the distribution of one of the genes.
 
 ```{r hist_expr,warning=FALSE}
-hist(expr.rna.192[,1], breaks = 20, col = "grey", ain = colnames(expr.rna.192)[1])
+hist(expr.rna.192[,1], breaks = 20, col = "grey", main = colnames(expr.rna.192)[1])
 ```
 
 Amazing! It lookes normally distributed. In fact, we have transformed each trait using an inverse normal (or rankZ) transformation. DOQTL contains a function called "rankZ()" that has been applied to each gene. If we leave the exrpession data untransformed, we may have outliers that would adversely affect the QTL mapping. The rankZ transformation provides a compromise between no transformation and simply ranking the data. Value at the extremes of the distriubtion will still have more leverage than values near the mean, but not enough to disrupt the mapping. Also, when all traits have the same distribution we can run permutations on only one gene to assess significance thresholds. 
