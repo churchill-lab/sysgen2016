@@ -36,9 +36,9 @@ rm -rf /data/ftp.jax.org
 ln -s /data ~/data
 
 # webapp 
-wget --recursive --level=20 --directory-prefix=/data ftp://ftp.jax.org/dgatti/ShortCourse2015/webapp/
-mv /data/ftp.jax.org/dgatti/ShortCourse2015/webapp /data/webapp
-rm -rf /data/ftp.jax.org
+#wget --recursive --level=20 --directory-prefix=/data ftp://ftp.jax.org/dgatti/ShortCourse2015/webapp/
+#mv /data/ftp.jax.org/dgatti/ShortCourse2015/webapp /data/webapp
+#rm -rf /data/ftp.jax.org
 
 # set privilages - everybody can do everything
 chmod --recursive 777 /data
