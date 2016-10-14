@@ -38,9 +38,9 @@ for(i in 1:N) {
   d %>% docklet_run("-dt", " -v /data:/data", " -p 43210:43210 -p 43211:43211 ", "churchill/asesuite") %>% docklet_ps()
   
   # add symbolic links
-  lines2 <- "docker exec myrstudio ln -s /data /home/rstudio/data"
-  cmd2 <- paste0("ssh ", analogsea:::ssh_options(), " ", "root", "@", analogsea:::droplet_ip(d)," ", shQuote(lines2))
-  analogsea:::do_system(d, cmd2, verbose = TRUE)
+#  lines2 <- "docker exec myrstudio ln -s /data /home/rstudio/data"
+#  cmd2 <- paste0("ssh ", analogsea:::ssh_options(), " ", "root", "@", analogsea:::droplet_ip(d)," ", shQuote(lines2))
+#  analogsea:::do_system(d, cmd2, verbose = TRUE)
 } # for(i)
 
 
