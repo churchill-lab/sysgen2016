@@ -1,7 +1,7 @@
 # make /data folder and subfolders
 mkdir -p /data
-mkdir -p /data/eQTL
-mkdir -p /data/pQTL
+#mkdir -p /data/eQTL
+#mkdir -p /data/pQTL
 mkdir -p /data/Rdata
 mkdir -p /data/scripts
 mkdir -p /data/tutorials
@@ -10,14 +10,14 @@ mkdir -p /data/tutorials
 wget --directory-prefix=/data/Rdata ftp://ftp.jax.org/dgatti/ShortCourse2015/DO192_DataforSysGenCourse.Rdata
 
 # Copy the eQTL data.
-wget --directory-prefix=/data/eQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/eQTL/eQTL_for_viewer.h5
-wget --directory-prefix=/data/eQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/eQTL/eQTL_perms.Rdata
-wget --directory-prefix=/data/eQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/eQTL/eQTL_summary.csv
+#wget --directory-prefix=/data/eQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/eQTL/eQTL_for_viewer.h5
+#wget --directory-prefix=/data/eQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/eQTL/eQTL_perms.Rdata
+#wget --directory-prefix=/data/eQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/eQTL/eQTL_summary.csv
 
 # Copy the pQTL data.
-wget --directory-prefix=/data/pQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/pQTL/pQTL_for_viewer.h5
-wget --directory-prefix=/data/pQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/pQTL/pQTL_perms.Rdata
-wget --directory-prefix=/data/pQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/pQTL/pQTL_summary.csv
+#wget --directory-prefix=/data/pQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/pQTL/pQTL_for_viewer.h5
+#wget --directory-prefix=/data/pQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/pQTL/pQTL_perms.Rdata
+#wget --directory-prefix=/data/pQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/pQTL/pQTL_summary.csv
 
 # DOQTL tutorial.
 wget --directory-prefix=/data/tutorials ftp://ftp.jax.org/dgatti/ShortCourse2015/tutorials/DO.circle.figure.png
