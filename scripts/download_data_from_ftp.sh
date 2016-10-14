@@ -11,12 +11,12 @@ wget --directory-prefix=/data/Rdata ftp://ftp.jax.org/dgatti/ShortCourse2015/DO1
 
 # Copy the eQTL data.
 #wget --directory-prefix=/data/eQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/eQTL/eQTL_for_viewer.h5
-#wget --directory-prefix=/data/eQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/eQTL/eQTL_perms.Rdata
+wget --directory-prefix=/data/ ftp://ftp.jax.org/dgatti/ShortCourse2015/eQTL/eQTL_perms.Rdata
 #wget --directory-prefix=/data/eQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/eQTL/eQTL_summary.csv
 
 # Copy the pQTL data.
 #wget --directory-prefix=/data/pQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/pQTL/pQTL_for_viewer.h5
-#wget --directory-prefix=/data/pQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/pQTL/pQTL_perms.Rdata
+wget --directory-prefix=/data/ ftp://ftp.jax.org/dgatti/ShortCourse2015/pQTL/pQTL_perms.Rdata
 #wget --directory-prefix=/data/pQTL ftp://ftp.jax.org/dgatti/ShortCourse2015/pQTL/pQTL_summary.csv
 
 # DOQTL tutorial.
