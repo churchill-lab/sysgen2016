@@ -13,7 +13,7 @@ d %>% docklet_pull("rocker/hadleyverse")
 d %>% docklet_pull("churchill/doqtl")
 d %>% docklet_pull("churchill/asesuite")
 d %>% docklet_pull("ipython/scipystack")
-d %>% docklet_pull("churchill/webapp")
+#d %>% docklet_pull("churchill/webapp")
 d %>% docklet_images()
 
 # download files to /data folder, takes ~30mins
