@@ -3,70 +3,48 @@ library(parallel)
 library(doParallel)
 Sys.setenv(DO_PAT = "*** REPLACE THIS BY YOUR DIGITAL OCEAN API KEY ***")
 
-participants <- read.csv("participant_list_addiction_course.csv", as.is=TRUE)
+participants <- read.delim("SysGen_Patricipant_List_10_11.txt", as.is=TRUE)
 N = nrow(participants)
+
+# Make machine names based on e-mail addresses.
+email.column = grep("email", colnames(participants), ignore.case = TRUE)
+machine.names = make.names(participants[,email.column])
+machine.names = gsub("_", ".", machine.names)
 
 # create a droplet for each participant
 droplet_list <- list()
 
-# parallelization would cause API error
-for(i in 1:N) {
-  print(i)
-  # start i-th machine
-  droplet_list[[i]] <- docklet_create(size = getOption("do_size", "8gb"),
-                                      region = getOption("do_region", "nyc2"))
-}
-
-cl <- makeCluster(N)
-registerDoParallel(cl)
-
-
-# pulling docker images
-foreach(i = 1:N, .packages="analogsea") %dopar% {
-  
-  # select droplet
-  d = droplet_list[[i]]
-  
-  # pull docker images
-  d %>% docklet_pull("rocker/hadleyverse")
-  d %>% docklet_pull("churchill/doqtl")
-  d %>% docklet_pull("churchill/asesuite")
-  d %>% docklet_pull("ipython/scipystack")
-  d %>% docklet_pull("churchill/webapp")
-  d %>% docklet_images()
-}
-
-# download files to /data folder, takes ~1 hour
-foreach(i = 1:N, .packages="analogsea") %dopar% {
-  
-  # select droplet
-  d = droplet_list[[i]]
-  
-  lines <- "wget https://raw.githubusercontent.com/churchill-lab/sysgen2015/master/scripts/download_data_from_ftp.sh
-            /bin/bash download_data_from_ftp.sh
-            rm download_data_from_ftp.sh"
-  cmd <- paste0("ssh ", analogsea:::ssh_options(), " ", "root", "@", analogsea:::droplet_ip(d)," ", shQuote(lines))
-  analogsea:::do_system(d, cmd, verbose = TRUE)
-}
-
-stopCluster(cl)
+# Trying new command to make multiple machines at once.
+img = images(private = TRUE)[["shortcourse2016"]]
+# NOTE: You may get an error if you create more than 10 machines.  Just make
+#       multiple calls to this function and stack up the droplets.
+droplet_list = droplets_create(names = machine.names[1:10], size = "8gb", image = img[[1]],
+                               region = "nyc2")
+droplet_list[11:20] = droplets_create(names =  machine.names[11:20], size = "8gb", image = img[[1]],
+                               region = "nyc2")
+droplet_list[21:N] = droplets_create(names =  machine.names[21:30], size = "8gb", image = img,[[1]]
+                               region = "nyc2")
+droplet_list[31:N] = droplets_create(names =  machine.names[31:N], size = "8gb", image = img[[1]],
+                               region = "nyc2")
 
 # start docker containers
 for(i in 1:N) {
   print(i)
   # select droplet
-  d = droplet_list[[i]]
+  d = droplet(droplet_list[[i]]$id)
   
-  d %>% docklet_run("-d", " -v /data:/data", " -p 8787:8787", " -e USER=rstudio", " -e PASSWORD=sysgen ", "churchill/doqtl")
-  d %>% docklet_run("-dt", " -v /data:/data", " -p 43210:43210 -p 43211:43211 ", "churchill/asesuite") %>% docklet_ps()
-  
-}
+  # start the container.
+  d %>% docklet_run("-d", " -v /data:/data", " -v /tutorial:/tutorial", " -p 8787:8787", 
+                    " -e USER=rstudio", " -e PASSWORD=mousegen ", "--name myrstudio ", "churchill/ibangs2016") %>%
+                    droplet_wait()
 
-# start webapp containers (memory intensive, better do not use with kallisto)
-#for(i in 1:N) {
-#  d = droplet_list[[i]]
-#  d %>% docklet_run("-dt", " -v /data:/data", " -p 8888:8888 -p 8889:8889 ", "churchill/webapp /usr/bin/start-app.sh") %>% docklet_ps()
-#}
+  # add symbolic links
+  lines2 <- "docker exec myrstudio ln -s /data /home/rstudio/data
+             docker exec myrstudio ln -s /tutorial /home/rstudio/tutorial"
+  cmd2 <- paste0("ssh ", analogsea:::ssh_options(), " ", "root", "@", analogsea:::droplet_ip(d)," ", shQuote(lines2))
+  analogsea:::do_system(d, cmd2, verbose = TRUE)
+} # for(i)
+
 
 
 ### Create participant table with links
