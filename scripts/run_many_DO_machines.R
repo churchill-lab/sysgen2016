@@ -33,14 +33,12 @@ for(i in 1:N) {
   # select droplet
   d = droplet(droplet_list[[i]]$id)
   
-  # start the container.
-  d %>% docklet_run("-d", " -v /data:/data", " -v /tutorial:/tutorial", " -p 8787:8787", 
-                    " -e USER=rstudio", " -e PASSWORD=mousegen ", "--name myrstudio ", "churchill/ibangs2016") %>%
-                    droplet_wait()
-
+  # start the containers.
+  d %>% docklet_run("-d", " -v /data:/data", " -p 8787:8787", " -e USER=rstudio", " -e PASSWORD=sysgen ", "churchill/doqtl")
+  d %>% docklet_run("-dt", " -v /data:/data", " -p 43210:43210 -p 43211:43211 ", "churchill/asesuite") %>% docklet_ps()
+  
   # add symbolic links
-  lines2 <- "docker exec myrstudio ln -s /data /home/rstudio/data
-             docker exec myrstudio ln -s /tutorial /home/rstudio/tutorial"
+  lines2 <- "docker exec myrstudio ln -s /data /home/rstudio/data"
   cmd2 <- paste0("ssh ", analogsea:::ssh_options(), " ", "root", "@", analogsea:::droplet_ip(d)," ", shQuote(lines2))
   analogsea:::do_system(d, cmd2, verbose = TRUE)
 } # for(i)
