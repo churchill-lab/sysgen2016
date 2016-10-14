@@ -17,7 +17,7 @@ droplet_list <- list()
 # Trying new command to make multiple machines at once.
 img = images(private = TRUE)[["shortcourse2016"]]
 # NOTE: You may get an error if you create more than 10 machines.  Just make
-#       multiple calls to this function and stack up the droplets.
+#       multiple calls to this function and stack up the droplets. (~ 10 min. for 10 machines)
 droplet_list = droplets_create(names = machine.names[1:10], size = "8gb", image = img[[1]],
                                region = "nyc2")
 droplet_list[11:20] = droplets_create(names =  machine.names[11:20], size = "8gb", image = img[[1]],
