@@ -10,7 +10,7 @@ d = droplet(d$id)
 
 # pull images (~10 min)
 d %>% docklet_pull("rocker/hadleyverse")
-d %>% docklet_pull("churchill/doqtl2016")
+d %>% docklet_pull("churchill/sysgen2016")
 d %>% docklet_pull("churchill/asesuite")
 d %>% docklet_pull("ipython/scipystack")
 #d %>% docklet_pull("churchill/webapp")
