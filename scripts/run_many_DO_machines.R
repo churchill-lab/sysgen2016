@@ -43,22 +43,28 @@ for(i in 1:N) {
 #  analogsea:::do_system(d, cmd2, verbose = TRUE)
 } # for(i)
 
+### To be sure we have IP for all machines
+for(i in 1:N) { droplet_list[[i]] <- droplet(droplet_list[[i]]$id) }
 
 
 ### Create participant table with links
 participants$link_RStudio <- sapply(droplet_list, function(x) paste0("http://",analogsea:::droplet_ip(x),":8787"))
 participants$link_terminal <- sapply(droplet_list, function(x) paste0("http://",analogsea:::droplet_ip(x),":43210"))
-
+participants$Name <- paste(participants$first_Name, participants$last_Name)
+  
 library(xtable)
 sanitize.text.function <- function(x) {
   idx <- substr(x, 1, 7) == "http://"
   x[idx] <- paste0('<a href="',x[idx],'">',sub("^http://","",x[idx]),'</a>')
   x
 }
-cols <- c("BadgeName", "link_RStudio", "link_terminal")
-print(xtable(participants[,cols], caption="Digital Ocean Machines"),
+cols <- c("Name", "link_RStudio", "link_terminal")
+ord <- order(participants$last_Name, participants$first_Name)
+
+print(xtable(participants[ord,cols], caption="Digital Ocean Machines"),
       type = "html", sanitize.text.function = sanitize.text.function,
       file = "dolist.html", include.rownames=FALSE)
+
 
 
 
