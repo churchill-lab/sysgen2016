@@ -22,7 +22,7 @@ droplet_list = droplets_create(names = machine.names[1:10], size = "8gb", image 
                                region = "nyc2")
 droplet_list[11:20] = droplets_create(names =  machine.names[11:20], size = "8gb", image = img[[1]],
                                region = "nyc2")
-droplet_list[21:30] = droplets_create(names =  machine.names[21:30], size = "8gb", image = img[[1]]
+droplet_list[21:30] = droplets_create(names =  machine.names[21:30], size = "8gb", image = img[[1]],
                                region = "nyc2")
 droplet_list[31:N] = droplets_create(names =  machine.names[31:N], size = "8gb", image = img[[1]],
                                region = "nyc2")
