@@ -46,7 +46,6 @@ for(i in 1:N) {
 
 
 ### Create participant table with links
-participants$DO_machine <- sapply(droplet_list, function(x) x$name)
 participants$link_RStudio <- sapply(droplet_list, function(x) paste0("http://",analogsea:::droplet_ip(x),":8787"))
 participants$link_terminal <- sapply(droplet_list, function(x) paste0("http://",analogsea:::droplet_ip(x),":43210"))
 
@@ -56,7 +55,7 @@ sanitize.text.function <- function(x) {
   x[idx] <- paste0('<a href="',x[idx],'">',sub("^http://","",x[idx]),'</a>')
   x
 }
-cols <- c("BadgeName", "DO_machine", "link_RStudio", "link_terminal")
+cols <- c("BadgeName", "link_RStudio", "link_terminal")
 print(xtable(participants[,cols], caption="Digital Ocean Machines"),
       type = "html", sanitize.text.function = sanitize.text.function,
       file = "dolist.html", include.rownames=FALSE)
