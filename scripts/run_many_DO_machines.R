@@ -60,29 +60,5 @@ print(xtable(participants[,cols], caption="Digital Ocean Machines"),
       type = "html", sanitize.text.function = sanitize.text.function,
       file = "dolist.html", include.rownames=FALSE)
 
-### Send emails to course participants
-library(mailR)
 
 
-for (i in 1:N) {
-  email_body <- paste0("Dear ",participants$first_Name[i],",\n\n",
-                       "During the workshop, you will need an access to RStudio and terminal ",
-                       "running on your personal Digital Ocean machine. You can access the machine ",
-                       "directly in your browser:\n\n",
-                       participants$link_RStudio[i]," (RStudio, user:rstudio, password:sysgen)\n",
-                       participants$link_terminal[i]," (terminal, user:root, password:sysgen)\n\n",
-                       "After the workshop you can run this docker image either on your personal machine or host it ",
-                       "on Digital Ocean (as we did). Further instructions can be found on https://github.com/churchill-lab/sysgen2015.\n\n",
-                       "Best regards,\n\n","Petr Simecek")
-  
-  send.mail(from = "REPLACE THIS BY YOUR_GMAIL@gmail.com",
-            to = participants$Email_Address[i],
-            replyTo = "REPLACE THIS BY YOUR_EMAIL",
-            subject = "Short Course On The Genetics Of Addiction - Digital Ocean Machine Access",
-            body = email_body,
-            smtp = list(host.name = "smtp.gmail.com", port = 465, 
-                        user.name = "REPLACE THIS BY YOUR_GMAIL@gmail.com", 
-                        passwd = "***YOUR PASSWORD***", ssl = TRUE),
-            authenticate = TRUE,
-            send = TRUE)
-}
