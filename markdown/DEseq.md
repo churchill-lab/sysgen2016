@@ -12,19 +12,19 @@ Intro
 
 One of the most common applications of RNA-seq technology is using it for identifying genes that are deferentially expressed between sample groups, for example, wild type vs mutant, or cancer vs normal samples.
 
-We will be using Diversity Outbred liver dataset: 192 mice, males vs. females, high fat diet vs. chow diet.
+We will be using Diversity Outbred liver dataset: 192 mice, males vs. females, high fat (HF) diet vs. chow diet.
 
 ``` r
 # load dataset
 load("/data/Rdata/DO192_DataforSysGenCourse.Rdata")
 ```
 
-For the beginning, let us restrict ourselves to chow mice data.
+For the beginning, let us restrict ourselves to HF mice data.
 
 ``` r
-chow.rna <- subset(expr.rna.192, covariates.rna.192$Diet == "HF")
-chow.protein <- subset(expr.protein.192, covariates.protein.192$Diet == "HF")
-chow.annot <- covariates.rna.192[covariates.rna.192$Diet == "HF",]
+hf.rna <- subset(expr.rna.192, covariates.rna.192$Diet == "HF")
+hf.protein <- subset(expr.protein.192, covariates.protein.192$Diet == "HF")
+hf.annot <- covariates.rna.192[covariates.rna.192$Diet == "HF",]
 ```
 
 For a given gene, how would you compare expression between males and females?
@@ -41,7 +41,7 @@ library(ggplot2)
 # find the gene
 gene.symbol = "Xist"
 index.rna = which(annotations.rna.192$Gene == gene.symbol)
-dt = data.frame(chow.annot, expr = chow.rna[, index.rna])
+dt = data.frame(hf.annot, expr = hf.rna[, index.rna])
 
 # we want Sex on x-axis, expr on y-axis and color by Sex
 p <- ggplot(dt, aes(x=Sex, y=expr, colour = Sex))
@@ -68,13 +68,13 @@ T-test
 # find the gene
 gene.symbol = "Xist"
 index.rna = which(annotations.rna.192$Gene == gene.symbol)
-t.test(chow.rna[, index.rna] ~ chow.annot$Sex)
+t.test(hf.rna[, index.rna] ~ hf.annot$Sex)
 ```
 
     ## 
     ##  Welch Two Sample t-test
     ## 
-    ## data:  chow.rna[, index.rna] by chow.annot$Sex
+    ## data:  hf.rna[, index.rna] by hf.annot$Sex
     ## t = 12.813, df = 91.923, p-value < 2.2e-16
     ## alternative hypothesis: true difference in means is not equal to 0
     ## 95 percent confidence interval:
@@ -84,7 +84,7 @@ t.test(chow.rna[, index.rna] ~ chow.annot$Sex)
     ##       0.7273916      -0.7769701
 
 ``` r
-pval <- t.test(chow.rna[, index.rna] ~ chow.annot$Sex)$p.value
+pval <- t.test(hf.rna[, index.rna] ~ hf.annot$Sex)$p.value
 ```
 
 #### Exercise 2
@@ -102,7 +102,7 @@ pvals <- rep(NA, N)
 
 # for every gene, run T-test and save the p-value
 for (index.rna in 1:N) {
-  pvals[index.rna] <- t.test(chow.rna[, index.rna] ~ chow.annot$Sex)$p.value
+  pvals[index.rna] <- t.test(hf.rna[, index.rna] ~ hf.annot$Sex)$p.value
 }  
 ```
 
@@ -112,7 +112,7 @@ You can speed up the computation with `rowttests` function from `genefilter` pac
 library(genefilter)
 
 # fast T-test for every column
-pvals <- colttests(chow.rna, factor(chow.annot$Sex))$p.value
+pvals <- colttests(hf.rna, factor(hf.annot$Sex))$p.value
 ```
 
 So, do we see sex effects in RNA expression data?
@@ -127,8 +127,8 @@ Let us make a mess and randomly shuffle rows.
 
 ``` r
 set.seed(1234)
-random.rna <- chow.rna[sample(nrow(chow.rna)),]
-random.pvals <- colttests(random.rna, factor(chow.annot$Sex))$p.value
+random.rna <- hf.rna[sample(nrow(hf.rna)),]
+random.pvals <- colttests(random.rna, factor(hf.annot$Sex))$p.value
 ```
 
 Because of random shuffling there should be no sex effect. However, we still get hundreds of p-values below `0.05` just by random chance.
@@ -155,7 +155,7 @@ hist(random.pvals)
 index.rna = 8568
 gene.symbol = annotations.rna.192$Gene[index.rna]
 
-dt = data.frame(chow.annot, expr = random.rna[, index.rna])
+dt = data.frame(hf.annot, expr = random.rna[, index.rna])
 
 # we want Sex on x-axis, expr on y-axis and color by Sex
 p <- ggplot(dt, aes(x=Sex, y=expr, colour = Sex))
